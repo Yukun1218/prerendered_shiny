@@ -1,5 +1,3 @@
-output:html_document
-runtime: shiny_prerendered
 
 ```{r eval='TRUE', echo=FALSE, results='asis'}
 if(colorNum ==0)  cat('\n##',c,'\n'); #cat('\n'); 

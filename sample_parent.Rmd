@@ -2,7 +2,6 @@
 title: "Hello Prerendered Shiny"
 output:
   html_document:
-    theme: cosmo
     fig_caption: yes
     keep_md: no
     number_sections: no
@@ -10,7 +9,7 @@ output:
     toc_depth: 5
     toc_float:
       collapsed: true
-runtime: shiny_prerendered
+  runtime: shiny_prerendered
 ---
 
 ```{r setup, results=FALSE, eval=TRUE, echo=FALSE, message=FALSE, warning=FALSE}
