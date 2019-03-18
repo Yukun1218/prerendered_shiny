@@ -37,7 +37,7 @@ There are 2 problems with this example.
     "Uncaught TypeError: a.indexOf is not a function" I guess it's indexing for the output id but couldn't find it.
   
   
-  2. But if we change the YAML indentation in parent.rmd a little:
+  2. But if we indent "runtime: shiny_prerendred" in the YAML header in parent.rmd by 2 digits:
     
     ---
     title: "Hello Prerendered Shiny"
