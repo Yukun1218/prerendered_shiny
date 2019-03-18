@@ -4,6 +4,7 @@ This is a minimal example of Parent - Child rmarkdown using dataset Diamond
 # Get Started
 Open the sample_parent.Rmd and click on "knitr"
 
+# Problem Description
 There are 2 problems with this example.
   1. Different indentation of YAML header lead to different results. 
    By Default, runtime option in the YAML header of parent.rmd is not indented. 
