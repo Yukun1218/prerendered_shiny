@@ -1,4 +1,3 @@
-# prerendered_shiny
 This is a minimal example of Parent - Child rmarkdown using dataset Diamond
 
 # Get Started
