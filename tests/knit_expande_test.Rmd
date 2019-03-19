@@ -1,0 +1,51 @@
+
+
+---
+title: "Hello Prerendered Shiny"
+runtime: shiny_prerendered
+output:
+  html_document:
+    theme: cosmo
+    fig_caption: yes
+    keep_md: no
+    number_sections: no
+    toc: yes
+    toc_depth: 5
+    toc_float:
+      collapsed: true
+---
+
+```{r setup, echo=FALSE}
+library(DT)
+library(tidyverse)
+library(rhandsontable)
+library(knitr)
+library(c3)
+
+knitr::opts_chunk$set(cache=FALSE)
+```
+
+## Content Listed by diamond color
+
+```{r echo=FALSE, eval=TRUE, include=FALSE, warning=FALSE}
+
+color <- levels(diamonds$color)
+out <- NULL
+
+for (c in color){
+
+  colorNum <- 0
+  
+  for (ct in 1: length(levels(diamonds[diamonds$color== c, ]$cut ))) {
+    
+    this_cut <- levels(diamonds[diamonds$color==c, ]$cut)[ct]
+    # env = new.env()
+    out = c(out, knit_expand('template.rmd'))
+    # out <- c(out, knit_child('sample_child.Rmd', envir = env))
+    colorNum <- colorNum +1
+  }
+}
+```
+
+
+`r paste(knit(text = out), collapse = '\n')`
