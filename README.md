@@ -67,6 +67,6 @@ There are 2 problems with this example.
       at Object.QWebChannel.transport.onmessage (userscript:qwebchannel:86:25)
       
       
-     I'm only making notes of symptons. I don't know the root cause. 
+    I'm only making notes of symptons. I don't know the root cause. 
      
   3. The "save" button work in a stand-alone example: see "test_save_button.R" 
