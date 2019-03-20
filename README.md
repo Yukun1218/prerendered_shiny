@@ -54,6 +54,8 @@ There are 2 problems with this example.
       runtime: shiny_prerendered
     ---
     
+    
+    
     The output will change:
     
     a). On first knit, all DT object will show up
