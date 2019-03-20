@@ -57,9 +57,13 @@ There are 2 problems with this example.
    The output will change:
     
    a). On first knit, all DT object will show up
+   
    b). Save button still don't work
+   
    c). Table of Content will lose function
+   
    d). On second knit or refresh page, all DT will disappear. 
+   
    e). Inspecting html error message: 
     
       Uncaught TypeError: channel.execCallbacks[message.id] is not a function
