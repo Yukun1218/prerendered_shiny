@@ -1,0 +1,19 @@
+
+```{r eval='TRUE', echo=FALSE, results='asis'}
+if(tableNum ==0) cat('\n'); cat('\n#####', this_clarity,'\n');
+```
+
+
+```{r, echo=FALSE,results='asis'}
+
+
+ data <- filter(diamonds, color == c, 
+                 cut == this_cut,
+                 clarity == this_clarity) %>%
+    as.data.frame()
+
+rhandsontable(data)
+
+
+```
+

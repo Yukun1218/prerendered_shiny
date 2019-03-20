@@ -7,27 +7,31 @@ if(colorNum ==0)  cat('\n##',c,'\n'); #cat('\n');
 
 ### `r this_cut`  
 
-#### Price range on fixed color and cut
+#### Price Plot - 2nd Level
 
 ```{r eval=TRUE, echo=FALSE, fig.retina=1, dpi = 72,results='asis', warning=FALSE}
 
-## ----Data preparation for this chunk and the following chunk(prevent server-side on-load processing)
-data <-subset(diamonds, color == c) %>%
+data <- filter(diamonds, color == c) %>%
   filter(cut == this_cut) %>%
   as.data.frame()
 
-clarity_list <- levels(data$clarity)
-price_list <- NULL
-
-for (i in 1:length(clarity_list)) {
-  d <- filter(data, clarity == clarity_list[i]) 
-  price_list[[i]] <- d
-}
-
-price_lists <- bind_rows(price_list) %>%
-  head(10)
-saveRDS(price_lists, file = paste0('./input/cache/diamond/',c ,'_', this_cut,'.RDS'))
-##----------End----------
+# ## ----Data preparation for this chunk and the following chunk(prevent server-side on-load processing)
+# data <-subset(diamonds, color == c) %>%
+#   filter(cut == this_cut) %>%
+#   as.data.frame()
+# 
+# clarity_list <- levels(data$clarity)
+# price_list <- NULL
+# 
+# for (i in 1:length(clarity_list)) {
+#   d <- filter(data, clarity == clarity_list[i]) 
+#   price_list[[i]] <- d
+# }
+# 
+# price_lists <- bind_rows(price_list) %>%
+#   head(10)
+# saveRDS(price_lists, file = paste0('./input/cache/diamond/',c ,'_', this_cut,'.RDS'))
+# ##----------End----------
 
 ## Output for this chunk
 plot(x = data$clarity, y = data$price, ylab = 'Price', xlab = 'clarity')
@@ -35,62 +39,23 @@ plot(x = data$clarity, y = data$price, ylab = 'Price', xlab = 'clarity')
 ```
 
 
-#### Detail Table
+#### Detail Table - 3rd Level
 
-```{r, echo=FALSE,results='asis'}
-## ----UI
-table_id <- paste0('sumtable_', c, '_', ct) # Dynamic outputID
 
-rHandsontableOutput(outputId = table_id)
-actionButton("saveBtn", "Save Change")
+```{r eval=TRUE, echo=FALSE, message=FALSE, warning=FALSE, include=FALSE}
+
+tableOut <- NULL
+tableNum <- 0
+
+for (cl in seq_along(length(levels(data$clarity)))){
+
+      this_clarity <- levels(data$clarity)[cl]
+      # env2 = new.env()
+      tableOut <- c(tableOut, knit(text = knit_expand("sample_grandChild_simple.Rmd"), quiet=TRUE))
+      # tableOut = c(tableOut, knit_child('sample_grandChild.Rmd', envir = env2))
+      tableNum <- tableNum +1
+    }
 
 ```
 
-```{r, context="server"}
-# Declare outputID: server sometimes doesn't inherit variable from previous environment...
-table_id <- paste0('sumtable_', c, '_', ct)
-
-fname <- paste0('./input/cache/outliers/edited_diamond') # R object data frame stored as ASCII text
-values <- list() 
-setHot <- function(x) values[[table_id]] <<- x 
-
-# output[[table_id]] <- renderRHandsontable({
-#   
-#   data <-subset(diamonds, color == c) %>%
-#   filter(cut == this_cut) %>%
-#   as.data.frame()
-#   
-#   rhandsontable(data)
-# })
-
-observeEvent( 
-    input$saveBtn, 
-    {if (!is.null(values[[table_id]])) { # if there's a table input
-      write.csv(values[[table_id]], fname) # overwrite the temporary database file
-      write.csv(x = values[[table_id]], file = paste0(fname, ".csv"), row.names = FALSE) # overwrite
-    }
-  })
-  
-  output[[table_id]] <- renderRHandsontable({ 
-    if (!is.null(input[[table_id]])) { # if there is an rhot user input...
-      DF <- hot_to_r(input[[table_id]]) # convert rhandsontable data to R object and store in data frame
-      setHot(DF) # set the rhandsontable values
-      
-    } else {
-      data <-subset(diamonds, color == c) %>%
-      filter(cut == this_cut) %>%
-      as.data.frame()
-      
-      DF <- readRDS(paste0('./input/cache/diamond/',c ,'_', this_cut,'.RDS')) 
-      
-      setHot(DF) # set the rhandsontable values
-    }
-    
-    rhandsontable(DF) %>% 
-      hot_table(highlightCol = TRUE, highlightRow = TRUE) 
-  }
-  )
-  
-```
-
-
+`r paste(tableOut, collapse='\n')`
