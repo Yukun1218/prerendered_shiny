@@ -54,21 +54,19 @@ There are 2 problems with this example.
       runtime: shiny_prerendered
     ---
     
+   The output will change:
     
-    
-    The output will change:
-    
-    a). On first knit, all DT object will show up
-    b). Save button still don't work
-    c). Table of Content will lose function
-    d). On second knit or refresh page, all DT will disappear. 
-    e). Inspecting html error message: 
+   a). On first knit, all DT object will show up
+   b). Save button still don't work
+   c). Table of Content will lose function
+   d). On second knit or refresh page, all DT will disappear. 
+   e). Inspecting html error message: 
     
       Uncaught TypeError: channel.execCallbacks[message.id] is not a function
       at QWebChannel.handleResponse (userscript:qwebchannel:137:42)
       at Object.QWebChannel.transport.onmessage (userscript:qwebchannel:86:25)
       
       
-    I'm only making notes of symptons. I don't know the root cause. 
+   I'm only making notes of symptons. I don't know the root cause. 
      
   3. The "save" button work in a stand-alone example: see "test_save_button.R" 
