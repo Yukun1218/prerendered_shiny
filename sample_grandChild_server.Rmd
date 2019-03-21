@@ -1,6 +1,9 @@
+```{r results=FALSE, eval=TRUE, echo=FALSE, message=FALSE, warning=FALSE}
+knitr::opts_chunk$set(echo=FALSE, warning=FALSE,message=FALSE, cache=FALSE)
+```
 
 ```{r eval='TRUE', echo=FALSE, results='asis'}
-if(tableNum ==0) cat('\n'); cat('\n#####', this_clarity,'\n');
+if(tableNum ==0) cat('\n'); 
 ```
 
 
@@ -8,8 +11,7 @@ if(tableNum ==0) cat('\n'); cat('\n#####', this_clarity,'\n');
 ## ----UI
 table_id <- paste0('sumtable_', c, '_', ct, '_', cl) # Dynamic outputID
 
-# rHandsontableOutput(outputId = table_id)
-textOutput(outputId = table_id)
+rHandsontableOutput(outputId = table_id)
 actionButton("saveBtn", "Save Change")
 
 ```
@@ -17,19 +19,16 @@ actionButton("saveBtn", "Save Change")
 ```{r, context="server"}
 # Declare outputID: server sometimes doesn't inherit variable from previous environment...
 table_id <- paste0('sumtable_', c, '_', ct, '_', cl)
-# output[[table_id]] <- renderRHandsontable({
-# 
-#   data <- filter(diamonds, color == c, 
-#                  cut == this_cut, 
-#                  clarity == this_clarity) %>%
-#     as.data.frame()
-# 
-#   rhandsontable(data)
-# })
+output[[table_id]] <- renderRHandsontable({
 
-output[table_id] <- renderText({
-  table_id
+  data <- filter(diamonds, color == c,
+                 cut == this_cut,
+                 clarity == this_clarity) %>%
+    as.data.frame()
+
+  rhandsontable(data)
 })
+
 
 # fname <- paste0('./input/cache/outliers/edited_diamond') # R object data frame stored as ASCII text
 # values <- list() 

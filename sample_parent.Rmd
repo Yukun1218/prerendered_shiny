@@ -37,8 +37,8 @@ for (c in color){
   for (ct in 1: length(levels(diamonds[diamonds$color== c, ]$cut ))) {
     
     this_cut <- levels(diamonds[diamonds$color==c, ]$cut)[ct]
-    env = new.env()
-    out <- c(out, knit_child('sample_child.Rmd', envir = env))
+    # env = new.env()
+    out <- c(out, knit_child('sample_child.Rmd'))
     colorNum <- colorNum +1
   }
 }

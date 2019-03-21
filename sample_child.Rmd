@@ -1,3 +1,7 @@
+```{r results=FALSE, eval=TRUE, echo=FALSE, message=FALSE, warning=FALSE}
+knitr::opts_chunk$set(echo=FALSE, warning=FALSE,message=FALSE, cache=FALSE)
+```
+
 
 ```{r eval='TRUE', echo=FALSE, results='asis'}
 if(colorNum ==0)  cat('\n##',c,'\n'); #cat('\n'); 
@@ -50,9 +54,9 @@ tableNum <- 0
 for (cl in seq_along(length(levels(data$clarity)))){
 
       this_clarity <- levels(data$clarity)[cl]
-      # env2 = new.env()
-      tableOut <- c(tableOut, knit(text = knit_expand("sample_grandChild_simple.Rmd"), quiet=TRUE))
-      # tableOut = c(tableOut, knit_child('sample_grandChild.Rmd', envir = env2))
+      env = new.env()
+      # tableOut <- c(tableOut, knit(text = knit_expand("sample_grandChild_simple.Rmd"), quiet=TRUE))
+      tableOut = c(tableOut, knit_child('sample_grandChild_server.Rmd', envir = env))
       tableNum <- tableNum +1
     }
 
