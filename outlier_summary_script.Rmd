@@ -1,0 +1,41 @@
+```{r, echo=FALSE}
+rHandsontableOutput('hot') 
+actionButton('saveBtn', 'Save Change')
+```
+
+```{r, context="server"}
+server_path <- paste0('/Data/shinydata/Tonys_project_data/dcsqa-cache/outlier_sample/edited_', Sys.Date())
+local_path <- paste0('./input/cache/outliers/edited_', Sys.Date())
+
+fname <- ifelse(!getwd()=="C:/Users/WB516609/OneDrive - WBG/DEC_DG/prerendered_shiny", server_path, local_path)
+values <- list() 
+setHot <- function(x) values[["hot"]] <<- x 
+
+observeEvent( 
+    input$saveBtn, # update csv file each time the button is pressed
+    {if (!is.null(values[["hot"]])) { # if there's a table input
+      # write.csv(values[["hot"]], fname) # overwrite the temporary database file
+      write.csv(x = values[["hot"]], file = paste0(fname, ".csv"), row.names = FALSE) # overwrite the csv
+    }
+  })
+
+
+observeEvent(input$saveBtn, {
+      showNotification("Good job!", 'Your input is recorded.',type = 'success')
+    })
+
+
+output$hot <- renderRHandsontable({
+ if (!is.null(input$hot)) { # if there is an rhot user input...
+      DF <- hot_to_r(input$hot) # convert rhandsontable data to R object and store in data frame
+      setHot(DF) # set the rhandsontable values
+      
+    } else {
+      DF <- head(iris,10) #readRDS(paste0('./input/cache/outliers/outliers_all.RDS'))
+      setHot(DF) # set the rhandsontable values
+    }
+    
+    rhandsontable(DF) %>% # actual rhandsontable object
+      hot_table(highlightCol = TRUE, highlightRow = TRUE)
+  })
+```

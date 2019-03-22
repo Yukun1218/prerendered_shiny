@@ -1,6 +1,8 @@
 ---
 title: "DCS QA Report Methodology"
-output: html_document
+output: 
+  html_document:
+    keep_md: yes
 ---
 
 > Methods
